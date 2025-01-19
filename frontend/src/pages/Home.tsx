@@ -84,7 +84,7 @@ const languages: Language[] = [
   },
 ];
 
-// Rest of the imports and interface definitions remain the same...
+
 
 export default function CodeEditor() {
   const [language, setLanguage] = React.useState<string>(languages[0].value);
