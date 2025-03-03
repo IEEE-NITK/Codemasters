@@ -7,13 +7,10 @@ import QuestionCard from './QuestionCard';
 import { TaskResult, createTask } from '../types/Task';
 import { FullQuestionProps } from '@/types/question';
 
-
 // Helper function to normalize strings for comparison (was referenced but not defined)
 const normalizeString = (str: string | null): string => {
   return str ? str.trim().replace(/\s+/g, ' ') : '';
 };
-
-
 
 const TaskFetcher: React.FC = () => {
   const { questionId } = useParams<{ questionId: string }>();
@@ -29,7 +26,7 @@ const TaskFetcher: React.FC = () => {
 
   // Fetch question details from the API using questionId
   const [question, setQuestion] = useState<FullQuestionProps | null>(null);
-  
+
   useEffect(() => {
     if (questionId) {
       axios.get(`http://localhost:3000/question/${questionId}`)
@@ -43,14 +40,11 @@ const TaskFetcher: React.FC = () => {
         });
     }
   }, [questionId]);
-   
+
   const pollTaskResult = async (taskId: string): Promise<void> => {
     try {
       const response = await axios.get(`http://localhost:3000/task/${taskId}`);
       const data: TaskResult = response.data;
-      if(!data.output) {
-        setResult(data.output||null);
-      }
 
       if (data.status === 'completed' && data.output) {
         setResult(data.output);
@@ -61,11 +55,11 @@ const TaskFetcher: React.FC = () => {
         setIsPolling(false);
         setIsLoading(false);
       } else {
-        setTimeout(() => pollTaskResult(taskId), 500);
+        setTimeout(() => pollTaskResult(taskId), 500); // Retry after 500ms
       }
     } catch (err) {
       if (axios.isAxiosError(err) && err.response?.status === 404) {
-        setTimeout(() => pollTaskResult(taskId), 500);
+        setTimeout(() => pollTaskResult(taskId), 500); // Retry after 500ms
       } else {
         setError(err instanceof Error ? err.message : 'Failed to fetch result');
         setIsPolling(false);
@@ -94,44 +88,19 @@ const TaskFetcher: React.FC = () => {
         questionId
       });
 
-      if (actionType === 'run') {
-        console.log(
-          {
-            ...task,
-            action: actionType,
-            userId: userid,
-            stdin:currentInput,
-            output:currentOutput
-          }
-        );
-        await axios.post(
-          'http://localhost:3000/task',
-          {
-            ...task,
-            action: actionType,
-            userId: userid,
-            stdin: currentInput,
-            output: currentOutput
-          },
-          { headers: { 'Content-Type': 'application/json' } }
-        );
-        setIsPolling(true);
-        pollTaskResult(task.taskId);
-        return;
-      } else if (actionType === 'submit') {
-        await axios.post(
-          'http://localhost:3000/task',
-          {
-            ...task,
-            action: actionType,
-            userId: userid
-          },
-          { headers: { 'Content-Type': 'application/json' } }
-        );
-        setIsPolling(true);
-        pollTaskResult(task.taskId);
-        return;
-      }
+      await axios.post(
+        'http://localhost:3000/task',
+        {
+          ...task,
+          action: actionType,
+          userId: userid,
+          stdin: currentInput,
+          output: currentOutput
+        },
+        { headers: { 'Content-Type': 'application/json' } }
+      );
+      setIsPolling(true);
+      pollTaskResult(task.taskId);
     } catch (error) {
       setError(error instanceof Error ? error.message : `Failed to ${actionType} code`);
       setIsLoading(false);
@@ -165,6 +134,8 @@ const TaskFetcher: React.FC = () => {
               setcurrentInput={setCurrentInput}
               currentOutput={currentOutput}
               setcurrentOutput={setCurrentOutput}
+              selected_input={currentInput}
+              selected_output={currentOutput}
             />
           </div>
           <div className="w-[70%]">

@@ -12,14 +12,12 @@ export default function SignIn() {
 
   useEffect(() => {
     const token = localStorage.getItem('token');
-      if (token) {
-        console.log('Token:', token);
-        window.location.href = '/questions';
-      }
-  }
-  , []);
-  
-  // Define the type for form submission
+    if (token) {
+      console.log('Token:', token);
+      window.location.href = '/questions';
+    }
+  }, []);
+
   async function onSubmit(event: React.FormEvent<HTMLFormElement>) {
     event.preventDefault();
     setIsLoading(true);
@@ -38,18 +36,22 @@ export default function SignIn() {
       });
 
       const data = await response.json();
-      localStorage.setItem('token', data.token);
-      
+
       if (!response.ok) {
         throw new Error(data.error || 'Sign in failed');
       }
 
-      // If successful, optionally handle the token here (e.g., cookies or localStorage)
+      if (!data.token) {
+        throw new Error('No token received');
+      }
+
+      localStorage.setItem('token', data.token);
       toast.success('Signed in successfully');
       window.location.href = '/questions';
       console.log('Token:', data.token);
     } catch (error: any) {
       toast.error(error.message || 'Failed to sign in');
+      console.error('Sign in error:', error);
     } finally {
       setIsLoading(false);
     }

@@ -1,15 +1,15 @@
 import React, { useState } from 'react';
 import { Menu, X, ChevronDown, Code, Terminal, Users, BookOpen, Calendar } from 'lucide-react';
 
-const Navbar = () => {
-  const [isMenuOpen, setIsMenuOpen] = useState(false);
-  const [activeDropdown, setActiveDropdown] = useState(null);
+const Navbar: React.FC = () => {
+  const [isMenuOpen, setIsMenuOpen] = useState<boolean>(false);
+  const [activeDropdown, setActiveDropdown] = useState<string | null>(null);
 
   const toggleMenu = () => {
     setIsMenuOpen(!isMenuOpen);
   };
 
-  const toggleDropdown = (dropdown) => {
+  const toggleDropdown = (dropdown: string) => {
     setActiveDropdown(activeDropdown === dropdown ? null : dropdown);
   };
 
@@ -86,12 +86,6 @@ const Navbar = () => {
               </a>
             </div>
           </div>
-
-          {/* <div className="hidden md:flex items-center">
-            <button className="ml-8 whitespace-nowrap inline-flex items-center justify-center px-4 py-2 border border-transparent rounded-md shadow-sm text-base font-medium text-white bg-blue-600 hover:bg-blue-700">
-              Join Us
-            </button>
-          </div> */}
 
           {/* Mobile menu button */}
           <div className="md:hidden flex items-center">

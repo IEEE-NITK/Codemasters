@@ -1,19 +1,19 @@
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import SignIn from './pages/SignIn';
 import SignUp from './pages/SignUp';
-import { Toaster } from '@/components/ui/sonner';
+import { Toaster } from 'sonner'; // Ensure correct import
 import Questions from './pages/Questions';
 import TaskFetcher from './pages/TaskFetcher';
 import AddQuestionForm from './pages/AddQuestionForm';
-import RealTimeEditor from './pages/RealTimeEditor';
-import Navbar from './components/Navbar';
+import RealTimeEditor from './pages/RealTimeEditor.tsx';
+import Navbar from './components/Navbar.tsx'; // Ensure correct import
 import { QuestionProvider } from './contexts/questionContext/questionContext';
 
 function App() {
   return (
     <QuestionProvider>
-      <Navbar />
       <Router>
+        <Navbar />
         <Routes>
           <Route path="/" element={<SignIn />} />
           <Route path="/user/signup" element={<SignUp />} />
@@ -22,8 +22,8 @@ function App() {
           <Route path="/solve/:questionId" element={<TaskFetcher />} />
           <Route path="/addquestion" element={<AddQuestionForm />} />
         </Routes>
-      <Toaster />
-    </Router>
+        <Toaster />
+      </Router>
     </QuestionProvider>
   );
 }
