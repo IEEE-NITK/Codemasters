@@ -29,7 +29,7 @@ export default function SignUp() {
         headers: {
           "Content-Type": "application/json", // Set content type as JSON
         },
-        body: JSON.stringify(data), // Send the data as a JSON string
+        body: JSON.stringify(data), // Send the data as JSON string
       });
 
       if (!response.ok) {
