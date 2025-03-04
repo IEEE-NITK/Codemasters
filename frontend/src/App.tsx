@@ -8,6 +8,7 @@ import AddQuestionForm from './pages/AddQuestionForm';
 import RealTimeEditor from './pages/RealTimeEditor.tsx';
 import Navbar from './components/Navbar.tsx'; // Ensure correct import
 import { QuestionProvider } from './contexts/questionContext/questionContext';
+import Profile from './pages/Profile.tsx';
 
 function App() {
   return (
@@ -20,6 +21,7 @@ function App() {
           <Route path="/questions" element={<Questions />} />
           <Route path="/editor" element={<RealTimeEditor />} />
           <Route path="/solve/:questionId" element={<TaskFetcher />} />
+          <Route path="/profile" element={<Profile />} />
           <Route path="/addquestion" element={<AddQuestionForm />} />
         </Routes>
         <Toaster />

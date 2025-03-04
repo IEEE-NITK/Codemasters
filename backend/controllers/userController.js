@@ -133,7 +133,7 @@ const getUserData = async (req, res) => {
   try {
     const { data: user, error } = await supabase
       .from("users")
-      .select("email, username, role")
+      .select("email, username, role, rating")
       .eq("id", id)
       .single();
 

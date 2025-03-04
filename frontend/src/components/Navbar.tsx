@@ -80,9 +80,9 @@ const Navbar: React.FC = () => {
                 )}
               </div>
 
-              <a href="#" className="text-white hover:bg-blue-800 px-3 py-2 rounded-md text-sm font-medium flex items-center">
+              <a href="/profile" className="text-white hover:bg-blue-800 px-3 py-2 rounded-md text-sm font-medium flex items-center">
                 <Users className="w-4 h-4 mr-1" />
-                Team
+                Profile
               </a>
             </div>
           </div>
