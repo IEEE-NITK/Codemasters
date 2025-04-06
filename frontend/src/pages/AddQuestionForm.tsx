@@ -72,7 +72,7 @@ export const AddQuestionForm = () => {
             ...data.QuestionData,
             exampleInput:data.QuestionData.exampleInput || {},  // Ensure it's always an object
             expectedOutput: data.QuestionData.exampleOutput || {}, // Ensure it's always an object
-            numTestCases:data.QuestionData.exampleInput.length
+            numTestCases:data.QuestionData.numTestCases
         }));
     }
 
@@ -120,6 +120,7 @@ export const AddQuestionForm = () => {
     setSuccess(false);
 
     try {
+      console.log("formdata",formData)
       const response = await fetch(`${config.HOST}/question/`, {
         method: "POST",
         headers: {
