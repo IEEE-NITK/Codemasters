@@ -86,7 +86,9 @@ const addQuestion = async (req, res) => {
 
   } = req.body;
 
-  if (!title || !description || !difficulty || !category || !exampleInput || !expectedOutput) {
+  console.log("backend data",req.body);
+
+  if (!title || !description || !difficulty || !category || !exampleInput || !expectedOutput ||!numTestCases ||!timeLimit||!acceptance||!constraintData||!visibleTestCases) {
     return res.status(400).json({ message: "Missing required fields" });
   }
 
